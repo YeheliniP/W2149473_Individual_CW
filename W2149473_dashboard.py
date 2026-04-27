@@ -51,14 +51,14 @@ st.plotly_chart(fig_donut, use_container_width=True)
 
 #Bar chart to show the most affected countries 
 st.header("Top Affected countries")
-hotspot_countries = filtered_data[filtered_data['hs_code'] > 0]['Country'].value_counts().head(10).reset_index()
+hotspot_countries = filtered_data[filtered_data['Hotspot_code'] > 0]['Country'].value_counts().head(10).reset_index()
 hotspot_countries.columns = ['Country', 'Hotspot Count']
 fig_bar = px.bar(hotspot_countries, x='Country', y='Hotspot Count', title="Top 10 Most Affected Countries")
 st.plotly_chart(fig_bar, use_container_width=True)
 
 #Crop vs. rangeland comparison
 st.header("Crop vs. Rangeland comparison")
-impact_total = filtered_data[['Cropland_Anomaly', 'Rangeland_Anomaly']].sum().reset_index()
+impact_total = filtered_data[['Cropland_anomaly', 'Rangeland_anomaly']].sum().reset_index()
 impact_total.columns = ['Category', 'Total Impact']
 fig_impact = px.bar(impact_total, x='Category', y='Total Impact', title="Global Impact of Anomalies on Crops vs. Rangeland")
 st.plotly_chart(fig_impact, use_container_width=True)
@@ -70,6 +70,6 @@ comment = filtered_data[filtered_data['Country'] == selected_country]['Comment']
 st.info(f"Comment for {selected_country}: {comment}")
 
 #Monthly trend analysis 
-monthly_trend = filtered_data.groupby('date').size().reset_index(name='Hotspot Count')
-trend = px.line(monthly_trend, x='date', y='Hotspot Count', title="Anomaly Hotspot Trends over time")
+monthly_trend = filtered_data.groupby('Date').size().reset_index(name='Hotspot Count')
+trend = px.line(monthly_trend, x='Date', y='Hotspot Count', title="Anomaly Hotspot Trends over time")
 st.plotly_chart(trend, use_container_width=True)
